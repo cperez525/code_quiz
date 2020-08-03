@@ -3,3 +3,7 @@ body {
     align-content: center;
     color: black;
 }
+
+ul {
+    list-style-type: none;
+}
