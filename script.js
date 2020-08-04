@@ -2,6 +2,9 @@
 var body = $("body")
 var header = $("header")
 
+// User's final score at the end of the quiz
+var finalScore = 0
+
 // Start quiz button listener
 document.getElementById("start-btn").addEventListener("click", function () {
 
@@ -12,6 +15,8 @@ document.getElementById("start-btn").addEventListener("click", function () {
 
     buildQuiz()
 })
+
+// Form for user to submit name and score
 
 function buildQuiz() {
 
@@ -118,25 +123,30 @@ function buildQuiz() {
         }
     ]
 
-    // User Score
+    // User Score to page
     var userScore = $("<h1>")
-    userScore.attr("class", "user-score")
+    userScore.attr("class", "user-score quiz")
     userScore.text(0)
     header.append(userScore)
 
-    // Quiz Timer
+    // Quiz Timer area
     var timeLeft = $("<h1>")
-    timeLeft.attr("class", "timer")
+    timeLeft.attr("class", "timer quiz")
     header.append(timeLeft)
 
     var timer = 31
 
+    // Timer Countdown and write to page
     function setTimer() {
 
         var timerInterval = setInterval(function () {
 
             timer--;
             timeLeft.text(timer)
+
+            if (timer < 20) {
+                timeLeft.attr("style", "color: orange")
+            }
 
             if (timer < 10) {
 
