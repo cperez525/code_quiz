@@ -1,4 +1,3 @@
-
 var testQuestions = [
     {
         question: "What symbols indicate a function/method?",
@@ -10,7 +9,6 @@ var testQuestions = [
         ],
         correctAnswer: "()"
     },
-
     {
         question: "Which is NOT type of variable?",
         answers: [
@@ -19,9 +17,8 @@ var testQuestions = [
             "boolean",
             "commit"
         ],
-        correctAnswer: "function"
+        correctAnswer: "commit"
     },
-
     {
         question: "What, by default, separates indexes within an array?",
         answers: [
@@ -32,7 +29,6 @@ var testQuestions = [
         ],
         correctAnswer: ","
     },
-
     {
         question: "What is the extension of Javascript files?",
         answers: [
@@ -43,7 +39,6 @@ var testQuestions = [
         ],
         correctAnswer: ".js"
     },
-
     {
         question: "When was Javascript created?",
         answers: [
@@ -54,18 +49,16 @@ var testQuestions = [
         ],
         correctAnswer: "1995"
     },
-
     {
         question: "What was Javascript originally called?",
         answers: [
             "Windows.script",
             "Mocha",
-            "funcscript",
+            "Livescript",
             "Java"
         ],
-        correctAnswer: "Mocha"
+        correctAnswer: "Livescript"
     },
-
     {
         question: "Which of the following is true?",
         answers: [
@@ -75,74 +68,131 @@ var testQuestions = [
             "A function cannot be assigned to a variable"
         ],
         correctAnswer: "In Javascript, 'Null' is an object"
+    },
+    {
+        question: "Brendan Eich was hired by which company to create Javascript?",
+        answers: [
+            "Microsoft",
+            "Apple",
+            "Linux",
+            "Netscape"
+        ],
+        correctAnswer: "Netscape"
+    },
+    {
+        question: "Javascript is also known as which of the following?",
+        answers: [
+            "JS",
+            "Java",
+            "JScript",
+            "None of these"
+        ],
+        correctAnswer: "JS"
+    },
+    {
+        question: "Which of these returns a boolean?",
+        answers: [
+            "alert",
+            "confirm",
+            "prompt",
+            "all of these"
+        ],
+        correctAnswer: "confirm"
     }
-
 ]
-
-// Question counter
-var q = 0
-
-// Quiz text variables to display on page for quiz
-var currentQuestion = testQuestions[q].question
-var currentRightAns = testQuestions[q].correctAnswer
 
 // Creating page elements and assigning appropriate quiz text
 var body = $("body")
 
-var mainEl = $("<main>")
-body.append(mainEl)
+function buildQuiz() {
 
-var questionEl = $("<h1>")
-mainEl.append(questionEl)
+    // User Score
+    var userScore = $("<h1>")
+    userScore.attr("class", "user-score")
+    userScore.text(0)
+    $("header").append(userScore)
 
-var answerList = $("<ul>")
-mainEl.append(answerList)
+    // Quiz Timer
+    var timeLeft = $("<h1>")
+    timeLeft.attr("class", "timer")
+    timeLeft.text(30)
+    $("header").append(timeLeft)
 
-function renderQuestion() {
+    // Question counter
+    var q = 0
 
-    var currentQuestion = testQuestions[q].question
-    questionEl.text(currentQuestion)
-}
+    // Quiz text variables to display on page for quiz
 
-function renderAnswers() {
-    for (var a = 0; a < 4; a++) {
+    var mainEl = $("<main>")
+    mainEl.attr("class", "quiz")
+    body.append(mainEl)
 
+    var questionEl = $("<h1>")
+    mainEl.append(questionEl)
 
-        var answerListItem = $("<li>")
-        answerList.append(answerListItem)
+    var answerList = $("<ul>")
+    mainEl.append(answerList)
 
-        var ansBtn = $("<button>")
-        ansBtn.attr("id", "button")
+    // Display currentQuestion text on page
+    function renderQuestion() {
 
-        var answerChoices = testQuestions[q].answers
-        ansBtn.text(answerChoices[a])
-        answerListItem.append(ansBtn)
+        var currentQuestion = testQuestions[q].question
+        questionEl.text(currentQuestion)
+    }
 
-        console.log($("button").text())
+    // Display the answerChoices that correspond with the currentQuestion
+    function renderAnswers() {
+        for (var a = 0; a < 4; a++) {
 
+            var answerListItem = $("<li>")
+            answerList.append(answerListItem)
+
+            var ansBtn = $("<button>")
+            ansBtn.attr("class", "ans-button")
+
+            var answerChoices = testQuestions[q].answers
+            ansBtn.text(answerChoices[a])
+            answerListItem.append(ansBtn)
+        }
         handleClick()
     }
+
+    // Click listener that also re-renders appropriate Question and answer set
+    function handleClick() {
+        $(".ans-button").on("click", function () {
+            var currentRightAns = testQuestions[q].correctAnswer
+
+            if ($(this).text() === currentRightAns) {
+
+                userScore.text(Number(userScore.text() - 1))
+            }
+            else {
+
+                timeLeft.text(Number(timeLeft.text() - 5))
+            }
+
+            if (q < testQuestions.length) {
+
+                $("li").remove()
+                q++
+                renderQuestion()
+                renderAnswers()
+                currentRightAns = testQuestions[q].correctAnswer
+            }
+        })
+    }
+
+    renderQuestion()
+    renderAnswers()
 }
 
-function handleClick() {
-    $("button").on("click", function () {
+// Start quiz button listener
+document.getElementById("start-btn").addEventListener("click", function () {
 
-        console.log($(this).text())
-        q++
+    var defaultItems = document.querySelectorAll(".default")
+    for (d = 0; d < defaultItems.length; d++) {
+        defaultItems[d].setAttribute("style", "Display: none")
+    }
 
-        if (q < testQuestions.length) {
-
-            $("li").remove()
-
-            renderQuestion()
-            renderAnswers()
-            console.log($("button").text())
-        }
-    })
-}
-renderQuestion()
-renderAnswers()
-
-
-
-
+    buildQuiz()
+})
