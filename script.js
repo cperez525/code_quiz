@@ -148,17 +148,22 @@ function buildQuiz() {
             timeLeft.text(timer)
 
             if (timer < 20) {
-                timeLeft.attr("style", "color: orange")
+                timeLeft.css("color", "orange")
             }
 
             if (timer < 10) {
 
-                timeLeft.attr("style", "color: red")
+                timeLeft.css("color", "red")
             }
 
             if (timer <= 0 ||
                 q === testQuestions.length) {
                 clearInterval(timerInterval)
+                for (e = 0; e < quizEls.length; e++) {
+
+                    quizEls[e].setAttribute("style", "display: none")
+                }
+                console.log(finalScore)
             }
 
 
@@ -178,9 +183,11 @@ function buildQuiz() {
     body.append(mainEl)
 
     var questionEl = $("<h1>")
+    questionEl.attr("class", "quiz")
     mainEl.append(questionEl)
 
     var answerList = $("<ul>")
+    answerList.attr("class", "quiz")
     mainEl.append(answerList)
 
     // Display currentQuestion text on page
@@ -247,6 +254,12 @@ function buildQuiz() {
             if (q == testQuestions.length) {
 
                 finalScore = userScore.text()
+
+                for (e = 0; e < quizEls.length; e++) {
+
+                    quizEls[e].setAttribute("style", "display: none")
+                }
+
                 console.log(finalScore)
             }
         })
@@ -255,5 +268,15 @@ function buildQuiz() {
     renderQuestion()
     renderAnswers()
 
+    var quizEls = $(".quiz")
+    console.log(quizEls)
 
+    if ( $(".quiz").css("display") === "none"){
+
+        $(".quiz").css("display", "inherit")
+        console.log($(".quiz").css("display"))
+    }
+    else{
+        console.log("false")
+    } 
 }

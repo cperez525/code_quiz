@@ -55,6 +55,10 @@ article, main {
     padding-top: 7%;
 }
 
+.quiz {
+    display: none;
+}
+
 main h1 {
     margin: 10px;
     font-size: larger;
