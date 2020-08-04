@@ -1,12 +1,22 @@
 // Creating page elements and assigning appropriate quiz text
 var body = $("body")
 var header = $("header")
+var formDiv = $(".form-section")
+var resultList = $(".results-list")
+
+// High Scores btn functionality
+$(".high-scores").on("click", function () {
+
+    var defaultItems = document.querySelectorAll(".default")
+    for (d = 0; d < defaultItems.length; d++) {
+        defaultItems[d].setAttribute("style", "Display: none")
+    }
+
+    renderHighScores()
+})
 
 // User's final score at the end of the quiz
 var finalScore = 0
-
-// Saved scores
-var savedScores = []
 
 // Start quiz button listener
 document.getElementById("start-btn").addEventListener("click", function () {
@@ -19,13 +29,60 @@ document.getElementById("start-btn").addEventListener("click", function () {
     buildQuiz()
 })
 
+// High Scoes page
+function renderHighScores() {
 
+    var clearScores = $("<button>")
+    clearScores.attr("class", "score-page-btns")
+    clearScores.text("Clear scores")
+    header.append(clearScores)
+
+    clearScores.on("click", function () {
+
+        localStorage.clear()
+        
+    })
+
+    var backBtn = $("<button>")
+    backBtn.attr("class", "score-page-btns")
+    backBtn.css("background-color", "Brown")
+    backBtn.text("Back")
+    header.append(backBtn)
+
+    backBtn.on("click", function () {
+
+        resultList.css("display", "none")
+        $(".score-page-btns").css("display", "none")
+
+        var defaultItems = document.querySelectorAll(".default")
+        for (d = 0; d < defaultItems.length; d++) {
+            defaultItems[d].setAttribute("style", "Display: inherit")
+        }
+
+    })
+
+
+    console.log(localStorage.getItem("Cris"))
+
+    formDiv.css("display", "none")
+
+    resultList.css("display", "inherit")
+
+
+    for (r = 0; r < localStorage.length; r++) {
+
+        var resultRow = $("<li>")
+        var storageKey = localStorage.key(r)
+        var storageVal = localStorage.getItem(storageKey)
+        resultRow.text(storageKey + " : " + storageVal)
+        resultList.append(resultRow)
+
+    }
+}
 
 // Form for user to submit name and score
 function renderScoreSubmit() {
 
-
-    var formDiv = $(".form-section")
     formDiv.css("display", "inherit")
 
     $("h1").text("The Quiz is over! Your score: " + finalScore + ". Click the submit button if you would like to save your score")
@@ -33,16 +90,19 @@ function renderScoreSubmit() {
     $("#submit-btn").on("click", function () {
         event.preventDefault()
 
+        // Saved scores
         var userInput = document.getElementById("user-input")
+        console.log(userInput.value.trim())
 
-        var savedUser = {
-            userName : userInput.value.trim(),
-            userFinalScore: finalScore
-        }
 
-        savedScores.push(savedUser)
+        var userName = userInput.value.trim()
+        var userFinalScore = finalScore
 
-        localStorage.setItem("savedScores", JSON.stringify(savedScores))
+
+
+        localStorage.setItem(userName, userFinalScore)
+        renderHighScores()
+
     })
 
 

@@ -14,7 +14,7 @@ header {
     color: white;
     background-color: darkblue;
     height: 40px;
-    width: 100px;
+    width: 200px;
     border-radius: 100%;
     margin: 5px;
 }
@@ -124,6 +124,23 @@ input {
 #submit-btn:hover {
 
     background-color: darkblue;
+}
+
+.results-list {
+    display: none;
+    text-align: center;
+    padding-top: 7%;
+
+}
+
+.score-page-btns {
+
+    color: white;
+    background-color: red;
+    height: 40px;
+    width: 200ps;
+    border-radius: 10px;
+    margin: 5px;
 }
 
 @media screen and (max-width: 991px){
