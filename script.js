@@ -276,7 +276,4 @@ function buildQuiz() {
         $(".quiz").css("display", "inherit")
         console.log($(".quiz").css("display"))
     }
-    else{
-        console.log("false")
-    } 
 }
