@@ -17,6 +17,9 @@ document.getElementById("start-btn").addEventListener("click", function () {
 })
 
 // Form for user to submit name and score
+function renderScoreSubmit() {
+
+}
 
 function buildQuiz() {
 
@@ -153,13 +156,15 @@ function buildQuiz() {
                 timeLeft.attr("style", "color: red")
             }
 
-            if (timer === 0) {
+            if (timer <= 0 ||
+                q === testQuestions.length) {
                 clearInterval(timerInterval)
             }
 
+
         }, 1000);
     }
-    
+
     setTimer()
 
 
@@ -181,31 +186,41 @@ function buildQuiz() {
     // Display currentQuestion text on page
     function renderQuestion() {
 
-        var currentQuestion = testQuestions[q].question
-        questionEl.text(currentQuestion)
+        if (q < testQuestions.length) {
+            var currentQuestion = testQuestions[q].question
+            questionEl.text(currentQuestion)
+        }
     }
 
     // Display the answerChoices that correspond with the currentQuestion
     function renderAnswers() {
-        for (var a = 0; a < 4; a++) {
 
-            var answerListItem = $("<li>")
-            answerList.append(answerListItem)
+        if (q < testQuestions.length) {
 
-            var ansBtn = $("<button>")
-            ansBtn.attr("class", "ans-button")
+            for (var a = 0; a < 4; a++) {
 
-            var answerChoices = testQuestions[q].answers
-            ansBtn.text(answerChoices[a])
-            answerListItem.append(ansBtn)
+                var answerListItem = $("<li>")
+                answerList.append(answerListItem)
+
+                var ansBtn = $("<button>")
+                ansBtn.attr("class", "ans-button")
+
+                var answerChoices = testQuestions[q].answers
+                ansBtn.text(answerChoices[a])
+                answerListItem.append(ansBtn)
+            }
         }
+
         handleClick()
+
     }
 
     // Click listener that also re-renders appropriate Question and answer set
     function handleClick() {
         $(".ans-button").on("click", function () {
+
             var currentRightAns = testQuestions[q].correctAnswer
+
 
             if ($(this).text() === currentRightAns) {
 
@@ -223,11 +238,22 @@ function buildQuiz() {
                 q++
                 renderQuestion()
                 renderAnswers()
-                currentRightAns = testQuestions[q].correctAnswer
+
+                if (q < testQuestions - 1) {
+                    currentRightAns = testQuestions[q].correctAnswer
+                }
+            }
+
+            if (q == testQuestions.length) {
+
+                finalScore = userScore.text()
+                console.log(finalScore)
             }
         })
     }
 
     renderQuestion()
     renderAnswers()
+
+
 }
