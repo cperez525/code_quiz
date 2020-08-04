@@ -8,6 +8,7 @@ header {
     justify-content: space-evenly;
 }
 
+
 .header-btn {
 
     color: white;
@@ -16,6 +17,11 @@ header {
     width: 100px;
     border-radius: 100%;
     margin: 5px;
+}
+
+.header-btn:hover {
+
+    background-color: green;
 }
 
 .timer {
@@ -43,6 +49,10 @@ body {
     background-color: darkred;
     color:white;
     font-size: xx-large;
+}
+
+#start-btn:hover {
+    background-color: rgba(139, 0, 0, 0.562);
 }
 
 .default {
@@ -81,6 +91,39 @@ li {
     min-width: 15%;
     min-height: 20px;
     border-radius: 2px;
+    font-size: large;
+    background-color: black;
+    color: white;
+}
+
+.ans-button:hover {
+    background-color: blue;
+}
+
+.form-section {
+    display: none;
+}
+
+input {
+
+    height: 30px;
+    width: 120px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#submit-btn {
+    margin-top: 10px;
+    background-color: green;
+    color: white;
+    border-radius: 16px;
+    height: 30px;
+    width: 60px;
+    border-color: black;
+}
+#submit-btn:hover {
+
+    background-color: darkblue;
 }
 
 @media screen and (max-width: 991px){

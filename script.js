@@ -5,6 +5,9 @@ var header = $("header")
 // User's final score at the end of the quiz
 var finalScore = 0
 
+// Saved scores
+var savedScores = []
+
 // Start quiz button listener
 document.getElementById("start-btn").addEventListener("click", function () {
 
@@ -16,8 +19,32 @@ document.getElementById("start-btn").addEventListener("click", function () {
     buildQuiz()
 })
 
+
+
 // Form for user to submit name and score
 function renderScoreSubmit() {
+
+
+    var formDiv = $(".form-section")
+    formDiv.css("display", "inherit")
+
+    $("h1").text("The Quiz is over! Your score: " + finalScore + ". Click the submit button if you would like to save your score")
+
+    $("#submit-btn").on("click", function () {
+        event.preventDefault()
+
+        var userInput = document.getElementById("user-input")
+
+        var savedUser = {
+            userName : userInput.value.trim(),
+            userFinalScore: finalScore
+        }
+
+        savedScores.push(savedUser)
+
+        localStorage.setItem("savedScores", JSON.stringify(savedScores))
+    })
+
 
 }
 
@@ -137,10 +164,12 @@ function buildQuiz() {
     timeLeft.attr("class", "timer quiz")
     header.append(timeLeft)
 
-    var timer = 31
+    var timer = 30
 
     // Timer Countdown and write to page
     function setTimer() {
+
+        timeLeft.text(timer)
 
         var timerInterval = setInterval(function () {
 
@@ -163,14 +192,15 @@ function buildQuiz() {
 
                     quizEls[e].setAttribute("style", "display: none")
                 }
-                console.log(finalScore)
+                finalScore = userScore.text()
+
+                renderScoreSubmit()
             }
 
 
         }, 1000);
-    }
 
-    setTimer()
+    }
 
 
     // Question counter
@@ -250,28 +280,17 @@ function buildQuiz() {
                     currentRightAns = testQuestions[q].correctAnswer
                 }
             }
-
-            if (q == testQuestions.length) {
-
-                finalScore = userScore.text()
-
-                for (e = 0; e < quizEls.length; e++) {
-
-                    quizEls[e].setAttribute("style", "display: none")
-                }
-
-                console.log(finalScore)
-            }
         })
     }
 
     renderQuestion()
     renderAnswers()
+    setTimer()
 
     var quizEls = $(".quiz")
     console.log(quizEls)
 
-    if ( $(".quiz").css("display") === "none"){
+    if ($(".quiz").css("display") === "none") {
 
         $(".quiz").css("display", "inherit")
         console.log($(".quiz").css("display"))
