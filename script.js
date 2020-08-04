@@ -138,6 +138,11 @@ function buildQuiz() {
             timer--;
             timeLeft.text(timer)
 
+            if (timer < 10) {
+
+                timeLeft.attr("style", "color: red")
+            }
+
             if (timer === 0) {
                 clearInterval(timerInterval)
             }
