@@ -32,13 +32,16 @@ document.getElementById("start-btn").addEventListener("click", function () {
 // High Scoes page
 function renderHighScores() {
 
+    //remove existing Back and Clear Score buttons if any
     $(".score-page-btns").remove()
 
+    // Render back Button
     var backBtn = $("<button>")
     backBtn.addClass("score-page-btns back-btn")
     backBtn.text("Back")
     header.append(backBtn)
 
+    // Back button listener that brings back Default view
     $(".back-btn").on("click", function () {
 
         resultList.css("display", "none")
@@ -52,12 +55,13 @@ function renderHighScores() {
 
     })
 
-
+    // Render clear button
     var clearScores = $("<button>")
     clearScores.addClass("score-page-btns clear-btn")
     clearScores.text("Clear scores")
     header.append(clearScores)
 
+    // Clear button listener that clears local storage and refreshes high scores view
     $(".clear-btn").on("click", function () {
 
         localStorage.clear()
@@ -68,11 +72,14 @@ function renderHighScores() {
         }
     })
 
+    //Change display to switch page view
     formDiv.css("display", "none")
     resultList.css("display", "block")
 
+    // clears out existing Result Rows so that they don't duplicate upon re-call of function
     resultList.empty()
 
+    // Writes key and values in storage
     for ( r = 0; r < localStorage.length; r++) {
 
         var resultRow = $("<li>")
@@ -89,6 +96,7 @@ function renderHighScores() {
 // Form for user to submit name and score
 function renderScoreSubmit() {
 
+    // Display form
     formDiv.css("display", "inherit")
 
     $("h1").text("The Quiz is over! Your score: " + finalScore + ". Click the submit button if you would like to save your score")
@@ -102,6 +110,7 @@ function renderScoreSubmit() {
         var userName = userInput.value.trim()
         var userFinalScore = finalScore
 
+        // set key and values to be called on High score view
         localStorage.setItem(userName, userFinalScore)
         renderHighScores()
     })
@@ -109,6 +118,7 @@ function renderScoreSubmit() {
 
 }
 
+// Render quiz view
 function buildQuiz() {
 
     var testQuestions = [
@@ -350,6 +360,7 @@ function buildQuiz() {
 
     var quizEls = $(".quiz")
 
+    // Says to display quiz if it is currently set to display none when the function is called
     if ($(".quiz").css("display") === "none") {
 
         $(".quiz").css("display", "inherit")
