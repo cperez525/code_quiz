@@ -32,42 +32,29 @@ document.getElementById("start-btn").addEventListener("click", function () {
 // High Scoes page
 function renderHighScores() {
 
-    var clearScores = $("<button>")
-    clearScores.attr("class", "score-page-btns")
-    clearScores.text("Clear scores")
-    header.append(clearScores)
-
-    clearScores.on("click", function () {
-
-        localStorage.clear()
-        
-    })
+    
 
     var backBtn = $("<button>")
-    backBtn.attr("class", "score-page-btns")
-    backBtn.css("background-color", "Brown")
+    backBtn.addClass("score-page-btns back-btn")
     backBtn.text("Back")
     header.append(backBtn)
 
-    backBtn.on("click", function () {
+    $(".back-btn").on("click", function () {
 
-        resultList.css("display", "none")
-        $(".score-page-btns").css("display", "none")
+        resultList.remove()
+        $(".score-page-btns").remove()
 
         var defaultItems = document.querySelectorAll(".default")
         for (d = 0; d < defaultItems.length; d++) {
-            defaultItems[d].setAttribute("style", "Display: inherit")
+            defaultItems[d].setAttribute("style", "Display: block")
         }
+        $("h1").text("You think you know Javascript?!")
 
     })
 
-
-    console.log(localStorage.getItem("Cris"))
-
     formDiv.css("display", "none")
 
-    resultList.css("display", "inherit")
-
+    resultList.css("display", "block")
 
     for (r = 0; r < localStorage.length; r++) {
 
@@ -78,6 +65,21 @@ function renderHighScores() {
         resultList.append(resultRow)
 
     }
+
+    var clearScores = $("<button>")
+    clearScores.addClass("score-page-btns clear-btn")
+    clearScores.text("Clear scores")
+    header.append(clearScores)
+
+    $(".clear-btn").on("click", function () {
+
+        localStorage.clear()
+
+        for (var L = 0; $("li").length; L++){
+
+        $("li").remove()
+        }
+    })
 }
 
 // Form for user to submit name and score
@@ -92,17 +94,12 @@ function renderScoreSubmit() {
 
         // Saved scores
         var userInput = document.getElementById("user-input")
-        console.log(userInput.value.trim())
-
 
         var userName = userInput.value.trim()
         var userFinalScore = finalScore
 
-
-
         localStorage.setItem(userName, userFinalScore)
         renderHighScores()
-
     })
 
 
@@ -250,7 +247,7 @@ function buildQuiz() {
                 clearInterval(timerInterval)
                 for (e = 0; e < quizEls.length; e++) {
 
-                    quizEls[e].setAttribute("style", "display: none")
+                    quizEls[e].remove()
                 }
                 finalScore = userScore.text()
 
@@ -348,11 +345,9 @@ function buildQuiz() {
     setTimer()
 
     var quizEls = $(".quiz")
-    console.log(quizEls)
 
     if ($(".quiz").css("display") === "none") {
 
         $(".quiz").css("display", "inherit")
-        console.log($(".quiz").css("display"))
     }
 }
