@@ -32,23 +32,8 @@ document.getElementById("start-btn").addEventListener("click", function () {
 // High Scoes page
 function renderHighScores() {
 
-    
+    $(".score-page-btns").remove()
 
-    formDiv.css("display", "none")
-    resultList.css("display", "block")
-
-    resultList.empty()
-
-    for ( r = 0; r < localStorage.length; r++) {
-
-        var resultRow = $("<li>")
-        var storageKey = localStorage.key(r)
-        var storageVal = localStorage.getItem(storageKey)
-        resultRow.text(storageKey + " : " + storageVal)
-        resultList.append(resultRow)
-
-    }
-    
     var backBtn = $("<button>")
     backBtn.addClass("score-page-btns back-btn")
     backBtn.text("Back")
@@ -82,6 +67,23 @@ function renderHighScores() {
         $("li").remove()
         }
     })
+
+    formDiv.css("display", "none")
+    resultList.css("display", "block")
+
+    resultList.empty()
+
+    for ( r = 0; r < localStorage.length; r++) {
+
+        var resultRow = $("<li>")
+        var storageKey = localStorage.key(r)
+        var storageVal = localStorage.getItem(storageKey)
+        resultRow.text(storageKey + " : " + storageVal)
+        resultList.append(resultRow)
+
+    }
+    
+    
 }
 
 // Form for user to submit name and score
