@@ -2,7 +2,7 @@ Homework #4: Code Quiz by Cristino Perez (https://github.com/cperez525)
 
 Repository URL: https://github.com/cperez525/code_quiz
 
-Deployed App URL: 
+Deployed App URL: https://cperez525.github.io/code_quiz/
 
 Screenshots:
 
