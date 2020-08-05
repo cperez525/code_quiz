@@ -34,6 +34,21 @@ function renderHighScores() {
 
     
 
+    formDiv.css("display", "none")
+    resultList.css("display", "block")
+
+    resultList.empty()
+
+    for ( r = 0; r < localStorage.length; r++) {
+
+        var resultRow = $("<li>")
+        var storageKey = localStorage.key(r)
+        var storageVal = localStorage.getItem(storageKey)
+        resultRow.text(storageKey + " : " + storageVal)
+        resultList.append(resultRow)
+
+    }
+    
     var backBtn = $("<button>")
     backBtn.addClass("score-page-btns back-btn")
     backBtn.text("Back")
@@ -41,7 +56,7 @@ function renderHighScores() {
 
     $(".back-btn").on("click", function () {
 
-        resultList.remove()
+        resultList.css("display", "none")
         $(".score-page-btns").remove()
 
         var defaultItems = document.querySelectorAll(".default")
@@ -52,19 +67,6 @@ function renderHighScores() {
 
     })
 
-    formDiv.css("display", "none")
-
-    resultList.css("display", "block")
-
-    for (r = 0; r < localStorage.length; r++) {
-
-        var resultRow = $("<li>")
-        var storageKey = localStorage.key(r)
-        var storageVal = localStorage.getItem(storageKey)
-        resultRow.text(storageKey + " : " + storageVal)
-        resultList.append(resultRow)
-
-    }
 
     var clearScores = $("<button>")
     clearScores.addClass("score-page-btns clear-btn")
